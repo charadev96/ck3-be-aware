@@ -1,0 +1,37 @@
+awr_message_birth = {
+	icon = "child"
+	title = event_message_title
+	desc = event_message_text
+}
+
+awr_message_death = {
+	icon = "death_natural"
+	title = event_message_title
+	desc = event_message_text
+	style = bad
+}
+
+awr_message_marriage = {
+	icon = "marriage"
+	title = event_message_title
+	desc = event_message_text
+}
+
+awr_message_divorce = {
+	icon = "marriage"
+	title = event_message_title
+	desc = event_message_text
+	style = bad
+}
+
+awr_message_guest_arrival = {
+	icon = "guest"
+	title = event_message_title
+	desc = event_message_text
+}
+
+awr_message_guest_departure = {
+	icon = "guest"
+	title = event_message_title
+	desc = event_message_text
+}

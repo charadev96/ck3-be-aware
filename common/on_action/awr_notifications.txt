@@ -1,0 +1,209 @@
+# Birth
+on_birth_child = {
+	on_actions = { awr_notify_birth }
+}
+awr_notify_birth = {
+	effect = {
+		every_player = {
+			limit = {
+				OR = {
+					# Of your dynasty
+					dynasty = scope:child.dynasty
+					dynasty = scope:father.dynasty
+					dynasty = scope:mother.dynasty
+					# Your friend
+					has_relation_friend = scope:father
+					has_relation_friend = scope:mother
+					# Your rival
+					has_relation_rival = scope:father
+					has_relation_rival = scope:mother
+					# Your vassal
+					this = scope:father.liege
+					this = scope:mother.liege
+					# Pinned
+					any_pinned_character = {
+						this = scope:father
+					}
+					any_pinned_character = {
+						this = scope:mother
+					}
+				}
+			}
+			send_interface_message = {
+				type = awr_message_birth
+				title = awr_birth.t
+				desc = awr_birth.desc
+				left_icon = scope:child
+			}
+		}
+	}
+}
+
+# Death
+on_death = {
+	on_actions = { awr_notify_death }
+}
+awr_notify_death = {
+	effect = {
+		save_scope_as = dead
+		every_player = {
+			limit = {
+				# Not in council (already in game)
+				NOT = {
+					scope:dead = { is_councillor_of = prev }
+				}
+				OR = {
+					# Of your dynasty
+					dynasty = scope:dead.dynasty
+					# Your friend
+					has_relation_friend = scope:dead
+					# Your rival
+					has_relation_rival = scope:dead
+					# Your vassal
+					this = scope:dead.liege
+					# Pinned (already in game)
+				}
+			}
+			send_interface_message = {
+				type = awr_message_death
+				title = awr_death.t
+				desc = awr_death.desc
+				left_icon = scope:dead
+			}
+		}
+	}
+}
+
+# Marriage
+on_marriage = {
+	on_actions = { awr_notify_marriage }
+}
+awr_notify_marriage = {
+	effect = {
+		save_scope_as = married
+		every_player = {
+			limit = {
+				# Not yours
+				NOT = {
+					this = scope:divorced
+					this = scope:spouse
+				}
+				OR = {
+					# Of your dynasty
+					dynasty = scope:married.dynasty
+					dynasty = scope:spouse.dynasty
+					# Your friend
+					has_relation_friend = scope:married
+					has_relation_friend = scope:spouse
+					# Your rival
+					has_relation_rival = scope:married
+					has_relation_rival = scope:spouse
+					# Your vassal
+					this = scope:married.liege
+					this = scope:spouse.liege
+					# Pinned
+					any_pinned_character = {
+						this = scope:married
+					}
+					any_pinned_character = {
+						this = scope:spouse
+					}
+				}
+			}
+			send_interface_message = {
+				type = awr_message_marriage
+				title = awr_marriage.t
+				desc = awr_marriage.desc
+				left_icon = scope:married
+				right_icon = scope:spouse
+			}
+		}
+	}
+}
+
+# Divorce
+on_divorce = {
+	on_actions = { awr_notify_divorce }
+}
+awr_notify_divorce = {
+	effect = {
+		save_scope_as = divorced
+		every_player = {
+			limit = {
+				# Not yours
+				NOT = {
+					this = scope:divorced
+					this = scope:spouse
+				}
+				OR = {
+					# Of your dynasty
+					dynasty = scope:divorced.dynasty
+					dynasty = scope:spouse.dynasty
+					# Your friend
+					has_relation_friend = scope:divorced
+					has_relation_friend = scope:spouse
+					# Your rival
+					has_relation_rival = scope:divorced
+					has_relation_rival = scope:spouse
+					# Your vassal
+					this = scope:divorced.liege
+					this = scope:spouse.liege
+					# Pinned
+					any_pinned_character = {
+						this = scope:divorced
+					}
+					any_pinned_character = {
+						this = scope:spouse
+					}
+				}
+			}
+			send_interface_message = {
+				type = awr_message_divorce
+				title = awr_divorce.t
+				desc = awr_divorce.desc
+				left_icon = scope:divorced
+				right_icon = scope:spouse
+			}
+		}
+	}
+}
+
+# Guest arrival
+on_guest_arrived_from_pool = {
+	on_actions = { awr_notify_guest_arrival }
+}
+awr_notify_guest_arrival = {
+	effect = {
+		every_player = {
+			limit = {
+				this = scope:host
+			}
+			send_interface_message = {
+				type = awr_message_guest_arrival
+				title = awr_guest_arrival.t
+				desc = awr_guest_arrival.desc
+				left_icon = scope:guest
+			}
+		}
+	}
+}
+
+# Guest departure
+on_guest_ready_to_move_to_pool = {
+	on_actions = { awr_notify_guest_departure }
+}
+awr_notify_guest_departure = {
+	effect = {
+		every_player = {
+			limit = {
+				this = scope:host
+			}
+			send_interface_message = {
+				type = awr_message_guest_departure
+				title = awr_guest_departure.t
+				desc = awr_guest_departure.desc
+				left_icon = scope:guest
+			}
+		}
+	}
+}
