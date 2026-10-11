@@ -1,6 +1,8 @@
 ﻿l_english:
-  awr_birth.t: "Your [GetPlayer.Custom2('RelationToMeShort', mother)|U] [mother.GetFirstNameNoTooltip|V] Had a Child"
-  awr_birth.desc: "[mother.GetRelationToString(GetPlayer)], [mother.GetFullName], gave birth to [child.GetFullName]."
+  awr_birth_mother.t: "Your [GetPlayer.Custom2('RelationToMeShort', mother)|U] [mother.GetFirstNameNoTooltip|V] Had a Child"
+  awr_birth_mother.desc: "[mother.GetRelationToString(GetPlayer)], [mother.GetFullName], and [father.GetFullName] welcomed their new child, [child.GetFullName]."
+  awr_birth_father.t: "Your [GetPlayer.Custom2('RelationToMeShort', father)|U] [father.GetFirstNameNoTooltip|V] Had a Child"
+  awr_birth_father.desc: "[father.GetRelationToString(GetPlayer)], [father.GetFullName], and [mother.GetFullName] welcomed their new child, [child.GetFullName]."
   awr_death.t: "Your [GetPlayer.Custom2('RelationToMeShort', dead)|U] [dead.GetFirstNameNoTooltip|V] Died"
   awr_death.desc: "[dead.GetRelationToString(GetPlayer)], [dead.GetFullName], has died."
 

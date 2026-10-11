@@ -7,23 +7,11 @@ awr_notify_birth = {
 		every_player = {
 			limit = {
 				OR = {
-					# Of your dynasty
 					dynasty = scope:child.dynasty
-					dynasty = scope:father.dynasty
 					dynasty = scope:mother.dynasty
-					# Your friend
-					has_relation_friend = scope:father
 					has_relation_friend = scope:mother
-					# Your rival
-					has_relation_rival = scope:father
 					has_relation_rival = scope:mother
-					# Your vassal
-					this = scope:father.liege
 					this = scope:mother.liege
-					# Pinned
-					any_pinned_character = {
-						this = scope:father
-					}
 					any_pinned_character = {
 						this = scope:mother
 					}
@@ -31,9 +19,30 @@ awr_notify_birth = {
 			}
 			send_interface_message = {
 				type = awr_message_birth
-				title = awr_birth.t
-				desc = awr_birth.desc
-				left_icon = scope:child
+				title = awr_birth_mother.t
+				desc = awr_birth_mother.desc
+				left_icon = scope:mother
+				right_icon = scope:child
+			}
+		}
+		every_player = {
+			limit = {
+				OR = {
+					dynasty = scope:father.dynasty
+					has_relation_friend = scope:father
+					has_relation_rival = scope:father
+					this = scope:father.liege
+					any_pinned_character = {
+						this = scope:father
+					}
+				}
+			}
+			send_interface_message = {
+				type = awr_message_birth
+				title = awr_birth_father.t
+				desc = awr_birth_father.desc
+				left_icon = scope:father
+				right_icon = scope:child
 			}
 		}
 	}
