@@ -85,7 +85,7 @@ awr_notify_marriage = {
 			limit = {
 				# Not yours
 				NOT = {
-					this = scope:divorced
+					this = scope:married
 					this = scope:spouse
 				}
 				OR = {
