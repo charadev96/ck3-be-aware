@@ -3,5 +3,6 @@ tags={
 	"Utilities"
 }
 name="Be Aware"
-supported_version="1.20.*"
 picture="thumbnail.png"
+supported_version="1.20.*"
+remote_file_id="3817263165"
