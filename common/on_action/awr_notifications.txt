@@ -38,10 +38,7 @@ awr_notify_birth = {
 				limit = {
 					OR = {
 						dynasty = scope:child.dynasty
-						dynasty = scope:mother.dynasty
-						has_relation_friend = scope:mother
-						has_relation_rival = scope:mother
-						this = scope:mother.liege
+						awr_is_relevant = { TARGET = scope:mother }
 					}
 				}
 				send_interface_message = {
@@ -58,9 +55,7 @@ awr_notify_birth = {
 				limit = {
 					OR = {
 						dynasty = scope:father.dynasty
-						has_relation_friend = scope:father
-						has_relation_rival = scope:father
-						this = scope:father.liege
+						awr_is_relevant = { TARGET = scope:father }
 					}
 				}
 				send_interface_message = {
@@ -94,6 +89,8 @@ awr_notify_death = {
 				OR = {
 					dynasty = scope:dead.dynasty
 					this = scope:dead.liege
+					liege = scope:dead
+					liege = scope:dead.liege
 				}
 			}
 			send_interface_message = {
@@ -148,14 +145,8 @@ awr_notify_marriage = {
 			else_if = {
 				limit = {
 					OR = {
-						dynasty = scope:married.dynasty
-						dynasty = scope:spouse.dynasty
-						has_relation_friend = scope:married
-						has_relation_friend = scope:spouse
-						has_relation_rival = scope:married
-						has_relation_rival = scope:spouse
-						this = scope:married.liege
-						this = scope:spouse.liege
+						awr_is_relevant = { TARGET = scope:married }
+						awr_is_relevant = { TARGET = scope:spouse }
 					}
 				}
 				send_interface_message = {
@@ -210,14 +201,8 @@ awr_notify_divorce = {
 			else_if = {
 				limit = {
 					OR = {
-						dynasty = scope:divorced.dynasty
-						dynasty = scope:spouse.dynasty
-						has_relation_friend = scope:divorced
-						has_relation_friend = scope:spouse
-						has_relation_rival = scope:divorced
-						has_relation_rival = scope:spouse
-						this = scope:divorced.liege
-						this = scope:spouse.liege
+						awr_is_relevant = { TARGET = scope:divorced }
+						awr_is_relevant = { TARGET = scope:spouse }
 					}
 				}
 				send_interface_message = {

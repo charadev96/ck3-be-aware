@@ -1,0 +1,14 @@
+awr_is_relevant = {
+	OR = {
+		dynasty = $TARGET$.dynasty
+		has_relation_friend = $TARGET$
+		has_relation_best_friend = $TARGET$
+		has_relation_soulmate = $TARGET$
+		has_relation_lover = $TARGET$
+		has_relation_rival = $TARGET$
+		has_relation_nemesis = $TARGET$
+		this = $TARGET$.liege
+		liege = $TARGET$
+		liege = $TARGET$.liege
+	}
+}
