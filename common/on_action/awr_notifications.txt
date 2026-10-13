@@ -5,44 +5,71 @@ on_birth_child = {
 awr_notify_birth = {
 	effect = {
 		every_player = {
-			limit = {
-				OR = {
-					dynasty = scope:child.dynasty
-					dynasty = scope:mother.dynasty
-					has_relation_friend = scope:mother
-					has_relation_rival = scope:mother
-					this = scope:mother.liege
-					any_pinned_character = {
-						this = scope:mother
-					}
+			# Pinned mother
+			if = {
+				limit = {
+					any_pinned_character = { this = scope:mother }
+				}
+				send_interface_message = {
+					type = awr_message_birth
+					title = awr_birth_mother_notable.t
+					desc = awr_birth_mother_notable.desc
+					left_icon = scope:mother
+					right_icon = scope:child
 				}
 			}
-			send_interface_message = {
-				type = awr_message_birth
-				title = awr_birth_mother.t
-				desc = awr_birth_mother.desc
-				left_icon = scope:mother
-				right_icon = scope:child
-			}
-		}
-		every_player = {
-			limit = {
-				OR = {
-					dynasty = scope:father.dynasty
-					has_relation_friend = scope:father
-					has_relation_rival = scope:father
-					this = scope:father.liege
-					any_pinned_character = {
-						this = scope:father
-					}
+
+			# Pinned father
+			else_if = {
+				limit = {
+					any_pinned_character = { this = scope:father }
+				}
+				send_interface_message = {
+					type = awr_message_birth
+					title = awr_birth_father_notable.t
+					desc = awr_birth_father_notable.desc
+					left_icon = scope:father
+					right_icon = scope:child
 				}
 			}
-			send_interface_message = {
-				type = awr_message_birth
-				title = awr_birth_father.t
-				desc = awr_birth_father.desc
-				left_icon = scope:father
-				right_icon = scope:child
+
+			# Relevant mother
+			else_if = {
+				limit = {
+					OR = {
+						dynasty = scope:child.dynasty
+						dynasty = scope:mother.dynasty
+						has_relation_friend = scope:mother
+						has_relation_rival = scope:mother
+						this = scope:mother.liege
+					}
+				}
+				send_interface_message = {
+					type = awr_message_birth
+					title = awr_birth_mother.t
+					desc = awr_birth_mother.desc
+					left_icon = scope:mother
+					right_icon = scope:child
+				}
+			}
+
+			# Relevant father
+			else_if = {
+				limit = {
+					OR = {
+						dynasty = scope:father.dynasty
+						has_relation_friend = scope:father
+						has_relation_rival = scope:father
+						this = scope:father.liege
+					}
+				}
+				send_interface_message = {
+					type = awr_message_birth
+					title = awr_birth_father.t
+					desc = awr_birth_father.desc
+					left_icon = scope:father
+					right_icon = scope:child
+				}
 			}
 		}
 	}
@@ -57,20 +84,14 @@ awr_notify_death = {
 		save_scope_as = dead
 		every_player = {
 			limit = {
-				# Not in council (already in game)
 				NOT = {
 					scope:dead = { is_councillor_of = prev }
 				}
 				OR = {
-					# Of your dynasty
 					dynasty = scope:dead.dynasty
-					# Your friend
 					has_relation_friend = scope:dead
-					# Your rival
 					has_relation_rival = scope:dead
-					# Your vassal
 					this = scope:dead.liege
-					# Pinned (already in game)
 				}
 			}
 			send_interface_message = {
@@ -92,39 +113,54 @@ awr_notify_marriage = {
 		save_scope_as = married
 		every_player = {
 			limit = {
-				# Not yours
 				NOT = {
-					this = scope:married
-					this = scope:spouse
-				}
-				OR = {
-					# Of your dynasty
-					dynasty = scope:married.dynasty
-					dynasty = scope:spouse.dynasty
-					# Your friend
-					has_relation_friend = scope:married
-					has_relation_friend = scope:spouse
-					# Your rival
-					has_relation_rival = scope:married
-					has_relation_rival = scope:spouse
-					# Your vassal
-					this = scope:married.liege
-					this = scope:spouse.liege
-					# Pinned
-					any_pinned_character = {
+					OR = {
 						this = scope:married
-					}
-					any_pinned_character = {
 						this = scope:spouse
 					}
 				}
 			}
-			send_interface_message = {
-				type = awr_message_marriage
-				title = awr_marriage.t
-				desc = awr_marriage.desc
-				left_icon = scope:married
-				right_icon = scope:spouse
+
+			# Pinned
+			if = {
+				limit = {
+					any_pinned_character = {
+						OR = {
+							this = scope:married
+							this = scope:spouse
+						}
+					}
+				}
+				send_interface_message = {
+					type = awr_message_marriage
+					title = awr_marriage_notable.t
+					desc = awr_marriage_notable.desc
+					left_icon = scope:married
+					right_icon = scope:spouse
+				}
+			}
+
+			# Relevant
+			else_if = {
+				limit = {
+					OR = {
+						dynasty = scope:married.dynasty
+						dynasty = scope:spouse.dynasty
+						has_relation_friend = scope:married
+						has_relation_friend = scope:spouse
+						has_relation_rival = scope:married
+						has_relation_rival = scope:spouse
+						this = scope:married.liege
+						this = scope:spouse.liege
+					}
+				}
+				send_interface_message = {
+					type = awr_message_marriage
+					title = awr_marriage.t
+					desc = awr_marriage.desc
+					left_icon = scope:married
+					right_icon = scope:spouse
+				}
 			}
 		}
 	}
@@ -139,39 +175,52 @@ awr_notify_divorce = {
 		save_scope_as = divorced
 		every_player = {
 			limit = {
-				# Not yours
 				NOT = {
 					this = scope:divorced
 					this = scope:spouse
 				}
-				OR = {
-					# Of your dynasty
-					dynasty = scope:divorced.dynasty
-					dynasty = scope:spouse.dynasty
-					# Your friend
-					has_relation_friend = scope:divorced
-					has_relation_friend = scope:spouse
-					# Your rival
-					has_relation_rival = scope:divorced
-					has_relation_rival = scope:spouse
-					# Your vassal
-					this = scope:divorced.liege
-					this = scope:spouse.liege
-					# Pinned
+			}
+
+			# Pinned
+			if = {
+				limit = {
 					any_pinned_character = {
-						this = scope:divorced
-					}
-					any_pinned_character = {
-						this = scope:spouse
+						OR = {
+							this = scope:divorced
+							this = scope:spouse
+						}
 					}
 				}
+				send_interface_message = {
+					type = awr_message_divorce
+					title = awr_divorce_notable.t
+					desc = awr_divorce_notable.desc
+					left_icon = scope:divorced
+					right_icon = scope:spouse
+				}
 			}
-			send_interface_message = {
-				type = awr_message_divorce
-				title = awr_divorce.t
-				desc = awr_divorce.desc
-				left_icon = scope:divorced
-				right_icon = scope:spouse
+
+			# Relevant
+			else_if = {
+				limit = {
+					OR = {
+						dynasty = scope:divorced.dynasty
+						dynasty = scope:spouse.dynasty
+						has_relation_friend = scope:divorced
+						has_relation_friend = scope:spouse
+						has_relation_rival = scope:divorced
+						has_relation_rival = scope:spouse
+						this = scope:divorced.liege
+						this = scope:spouse.liege
+					}
+				}
+				send_interface_message = {
+					type = awr_message_divorce
+					title = awr_divorce.t
+					desc = awr_divorce.desc
+					left_icon = scope:divorced
+					right_icon = scope:spouse
+				}
 			}
 		}
 	}
