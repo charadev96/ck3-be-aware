@@ -85,12 +85,14 @@ awr_notify_death = {
 		every_player = {
 			limit = {
 				NOT = {
-					scope:dead = { is_councillor_of = prev }
+					OR = {
+						scope:dead = this
+						scope:dead = { is_councillor_of = prev }
+						is_close_family_of = scope:dead
+					}
 				}
 				OR = {
 					dynasty = scope:dead.dynasty
-					has_relation_friend = scope:dead
-					has_relation_rival = scope:dead
 					this = scope:dead.liege
 				}
 			}
@@ -115,6 +117,8 @@ awr_notify_marriage = {
 			limit = {
 				NOT = {
 					OR = {
+						is_parent_of = scope:married
+						is_parent_of = scope:spouse
 						this = scope:married
 						this = scope:spouse
 					}
@@ -176,8 +180,10 @@ awr_notify_divorce = {
 		every_player = {
 			limit = {
 				NOT = {
-					this = scope:divorced
-					this = scope:spouse
+					OR = {
+						this = scope:divorced
+						this = scope:spouse
+					}
 				}
 			}
 
